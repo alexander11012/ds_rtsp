@@ -10,6 +10,8 @@ Develop a computer vision app, utilizing YOLOv8 to process video feeds from a we
 
 The Jetson Nano operates in headless mode and connects to the local network via Wi-Fi. It processes video feeds from a webcam and streams live inference results to a main workstation through an RTSP feed. Control and monitoring are managed remotely via SSH from the same workstation.
 
+![Scheme](https://github.com/alexander11012/ds_rtsp/blob/main/table_1.png)
+
 ---
 
 ### Main challenge:
