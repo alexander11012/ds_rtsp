@@ -193,7 +193,23 @@ We used the [DeepStream-Yolo](https://github.com/marcoslucianops/DeepStream-Yolo
 ## Demo
 
 
+The pipeline and model export method were tested on the Jetson Nano 2GB Developer Kit with jetson_clocks running for maximum performance. The models evaluated included YOLOv8n and YOLOv11n, both with and without an inference frame interval of 2 (where the inference engine skips 2 out of every 3 frames). While frame-skipping significantly improved performance, it also caused bounding box flickering. This issue was mitigated by integrating a tracker into the pipeline.
+
+The videos below showcase recorded RTSP streams, captured on a control machine using VLC player. The video is "sample_720p.mp4" from DeepStream samples.
 
 
-https://github.com/user-attachments/assets/e0582480-8991-4c46-b1ab-01e9f56bd3ed
+
+
+
+https://github.com/user-attachments/assets/b8239808-6725-4253-82e3-b14bb0630ead
+
+
+https://github.com/user-attachments/assets/47139cd1-027e-4889-972a-c2ab91df7323
+
+
+This is a comparison between the skip and no-skip pipeline configurations running on YOLOv8n and YOLOv11n. The videos are displayed side by side, starting from the same point in the sequence. It is evident that the performance difference between these configurations is substantial and far exceeds the difference observed between the two models when running the frame-skip configuration.
+
+
+
+https://github.com/user-attachments/assets/47c8d650-227d-4335-a679-a61051fa184b
 
