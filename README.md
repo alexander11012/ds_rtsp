@@ -70,6 +70,8 @@ The DeepStream approach was chosen as the only viable option after encountering 
 <details>
 <summary>Setup</summary>
 
+*Note that this method was tested with the YOLOv11n model and was confirmed to be fully functional. The ds_rtsp_y11n pipeline has been added to the repository with minimal modifications to the original configuration file for clarity.*
+
 #### Dependencies installation on Jetson Nano:
 *Note: All path-sensitive commands will assume the DeepStream path to be ```/opt/nvidia/deepstream/deepstream-6.0/``` and will explicitly use this path where applicable.*
 - Complete [**DeepStream**](https://docs.nvidia.com/metropolis/deepstream/6.0.1/dev-guide/text/DS_Quickstart.html#install-dependencies) setup and dependencies installation:
@@ -119,10 +121,13 @@ The DeepStream approach was chosen as the only viable option after encountering 
     ```bash
     pip3 install pyds
     ```
-- Clone **ds\_rtsp** repository to: `/opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps`
+- Clone **ds\_rtsp** repository
     ```bash
     git clone https://github.com/alexander11012/ds_rtsp.git
     ```
+ - Move  `ds_rtsp_y8n` and `ds_rtsp_y11n`  directories to `/opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps`
+ - Move  modified ` FPS.py ` to `/opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps/common`
+
 ---
 </details>
 <details>
@@ -145,6 +150,8 @@ We used the [DeepStream-Yolo](https://github.com/marcoslucianops/DeepStream-Yolo
       git clone https://github.com/alexander11012/ds_rtsp.git
     ```
 ### Note: Following instructions are executed on **Development Machine**:
+*This method was tested and works with both yolov8n and yolov11n, instructions below are for yolov8n.*
+
 - Copy `export_yoloV8.py` from the `DeepStream-Yolo/utils` repository to the `ultralytics` folder.
 
     *Note: Path to `ultralytics` folder depends on your development environment and method of installation. For example, path to ultralytics installed via conda on Windows: "\...\anaconda3\pkgs\ultralytics".*
@@ -170,19 +177,19 @@ We used the [DeepStream-Yolo](https://github.com/marcoslucianops/DeepStream-Yolo
     make -C nvdsinfer_custom_impl_Yolo clean && make -C nvdsinfer_custom_impl_Yolo
     ```
 
-- Copy `nvdsinfer_custom_impl_Yolo` directory, `yolov8n.onnx`, and label files to the application directory: `/opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps/ds_rtsp_y8n_cam` by default.
+- Copy `nvdsinfer_custom_impl_Yolo` directory, `yolov8n.onnx`, and label files to the application directory: `/opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps/ds_rtsp_y8n` by default.
 
 - Build TensorRT Engine File by starting the pipeline:
   ```
   #path to app directory for default installation
-  cd /opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps/ds_rtsp_y8n_cam
-  python3 ds_rtsp_y8n_cam.py -i /dev/video0
+  cd /opt/nvidia/deepstream/deepstream-6.0/sources/deepstream_python_apps/apps/ds_rtsp_y8n
+  python3 ds_rtsp_cam.py -i /dev/video0
   ```
 
   *Note: Pipeline may take time to start the first time due to engine building.*
 
   ```
-  python3 ds_rtsp_y8n_cam.py -i /dev/video0
+  python3 ds_rtsp_cam.py -i /dev/video0
   ```
 
 *Tip: Access the RTSP stream via the Jetson Nano IP at port 8555.*
@@ -190,12 +197,19 @@ We used the [DeepStream-Yolo](https://github.com/marcoslucianops/DeepStream-Yolo
 *Note: ******[Win-RTSP-Player](https://github.com/e1z0/Win-RTSP-Player)****** and VLC player were used to test the RTSP stream output.*
 </details>
 
-## Demo
+<details>
+<summary>Using uri as input</summary>
+This repository also includes a pipeline 'ds_rtsp_mp4.py' designed to use URIs as input. Inputs can be in the form of an RTSP stream (e.g., rtsp://ip:port/url) or a file path (e.g., file://videofile).
+  
+</details>
+
+
+## Results
 
 
 The pipeline and model export method were tested on the Jetson Nano 2GB Developer Kit with jetson_clocks running for maximum performance. The models evaluated included YOLOv8n and YOLOv11n, both with and without an inference frame interval of 2 (where the inference engine skips 2 out of every 3 frames). While frame-skipping significantly improved performance, it also caused bounding box flickering. This issue was mitigated by integrating a tracker into the pipeline.
 
-The videos below showcase recorded RTSP streams, captured on a control machine using VLC player. The video is "sample_720p.mp4" from DeepStream samples.
+The videos below showcase recorded RTSP streams, captured on a control machine using VLC player. The video is "sample_720p.mp4" from DeepStream samples.
 
 
 
@@ -212,4 +226,10 @@ This is a comparison between the skip and no-skip pipeline configurations runnin
 
 
 https://github.com/user-attachments/assets/47c8d650-227d-4335-a679-a61051fa184b
+
+
+
+https://github.com/user-attachments/assets/47c8d650-227d-4335-a679-a61051fa184b
+
+
 
