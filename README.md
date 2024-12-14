@@ -1,4 +1,4 @@
-## **ds\_rtsp: YOLO-Based DeepStream Pipeline on Jetson Nano Platform**
+## **ds\_rtsp: YOLO8/11-Based DeepStream Pipeline on Jetson Nano Platform**
 
 ### Objective
 
