@@ -207,7 +207,7 @@ This repository also includes a pipeline 'ds_rtsp_mp4.py' designed to use URIs a
 ## Results
 
 
-The pipeline and model export method were tested on the Jetson Nano 2GB Developer Kit with jetson_clocks running for maximum performance. The models evaluated included YOLOv8n and YOLOv11n, both with and without an inference frame interval of 2 (where the inference engine skips 2 out of every 3 frames). While frame-skipping significantly improved performance, it also caused bounding box flickering. This issue was mitigated by integrating a tracker into the pipeline.
+The pipeline and model export method were tested on the Jetson Nano 2GB Developer Kit with jetson_clocks running for maximum performance. The models evaluated included YOLOv8n and YOLOv11n, both with and without an inference frame interval of 2 (where the inference engine skips 2 out of every 3 frames, set in config file). While frame-skipping significantly improved performance, it also caused bounding box flickering. This issue was mitigated by integrating a tracker into the pipeline.
 
 The videos below showcase recorded RTSP streams, captured on a control machine using VLC player. The video is "sample_720p.mp4" from DeepStream samples.
 
